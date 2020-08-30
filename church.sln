@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30404.54
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "church.Web", "church.Web\church.Web.csproj", "{3C1AC7E3-74B1-4B7D-A879-5EED587C0F0C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Church.Web", "church.Web\Church.Web.csproj", "{3C1AC7E3-74B1-4B7D-A879-5EED587C0F0C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "church.Common", "church.Common\church.Common.csproj", "{A716CABB-CB00-4E9A-80F7-25A77C6B58CF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Church.Common", "church.Common\Church.Common.csproj", "{A716CABB-CB00-4E9A-80F7-25A77C6B58CF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
