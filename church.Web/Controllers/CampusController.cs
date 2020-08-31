@@ -316,7 +316,163 @@ namespace Church.Web.Controllers
             return RedirectToAction($"{nameof(Details)}/{campus.Id}");
         }
 
+        ///////////////////////////////////////////////////
+        ///
 
+        public async Task<IActionResult> DetailsDistrict(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            District district = await _context.districts
+                .Include(c => c.Churches)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (district == null)
+            {
+                return NotFound();
+            }
+
+            Campus campus = await _context.campuses.FirstOrDefaultAsync(c => c.Districts.FirstOrDefault(d => d.Id == district.Id) != null);
+            district.IdCampus = campus.Id;
+            return View(district);
+        }
+
+
+        ////////////////////////////////////////////////
+        ///
+
+        public async Task<IActionResult> AddChurch(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            District district = await _context.districts.FindAsync(id);
+            if (district == null)
+            {
+                return NotFound();
+            }
+
+            Churchi model = new Churchi{ IdChurch = district.Id };
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddChurch(Churchi churchi)
+        {
+            if (ModelState.IsValid)
+            {
+                District district= await _context.districts
+                    .Include(c => c.Churches)
+                    .FirstOrDefaultAsync(c => c.Id == churchi.IdChurch);
+                if (district == null)
+                {
+                    return NotFound();
+                }
+
+                try
+                {
+                    churchi.Id = 0;
+                    district.Churches.Add(churchi);
+                    _context.Update(district);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction($"{nameof(DetailsDistrict)}/{district.Id}");
+
+                }
+                catch (DbUpdateException dbUpdateException)
+                {
+                    if (dbUpdateException.InnerException.Message.Contains("duplicate"))
+                    {
+                        ModelState.AddModelError(string.Empty, "There are a record with the same name.");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
+                    }
+                }
+                catch (Exception exception)
+                {
+                    ModelState.AddModelError(string.Empty, exception.Message);
+                }
+            }
+
+            return View(churchi);
+        }
+
+
+        public async Task<IActionResult> EditChurch(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            Churchi churchi = await _context.churches.FindAsync(id);
+            if (churchi == null)
+            {
+                return NotFound();
+            }
+
+            District district = await _context.districts.FirstOrDefaultAsync(d => d.Churches.FirstOrDefault(c => c.Id == churchi.Id) != null);
+            churchi.IdChurch = district.Id;
+            return View(churchi);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditChurch(Churchi churchi)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(churchi);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction($"{nameof(DetailsDistrict)}/{churchi.IdChurch}");
+
+                }
+                catch (DbUpdateException dbUpdateException)
+                {
+                    if (dbUpdateException.InnerException.Message.Contains("duplicate"))
+                    {
+                        ModelState.AddModelError(string.Empty, "There are a record with the same name.");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
+                    }
+                }
+                catch (Exception exception)
+                {
+                    ModelState.AddModelError(string.Empty, exception.Message);
+                }
+            }
+            return View(churchi);
+        }
+
+        public async Task<IActionResult> DeleteChurch(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            Churchi churchi= await _context.churches
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (churchi == null)
+            {
+                return NotFound();
+            }
+
+            District district= await _context.districts.FirstOrDefaultAsync(d => d.Churches.FirstOrDefault(c => c.Id == churchi.Id) != null);
+            _context.churches.Remove(churchi);
+            await _context.SaveChangesAsync();
+            return RedirectToAction($"{nameof(DetailsDistrict)}/{district.Id}");
+        }
 
     }
 }

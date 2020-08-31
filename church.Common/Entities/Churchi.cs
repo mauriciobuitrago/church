@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Church.Common.Entities
 {
@@ -9,6 +10,10 @@ namespace Church.Common.Entities
         [MaxLength(50)]
         [Required]
         public string Name { get; set; }
+
+        [NotMapped]
+        public int IdChurch { get; set; }
+
 
     }
 }
