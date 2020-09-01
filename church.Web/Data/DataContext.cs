@@ -1,10 +1,11 @@
 ﻿using Church.Common.Entities;
-
+using Church.Web.Data.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Church.Web.Data
 {
-    public class DataContext : DbContext
+    public class DataContext : IdentityDbContext<User>
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
@@ -16,6 +17,7 @@ namespace Church.Web.Data
         public DbSet<District> districts { get; set; }
         public DbSet<Profession> Professions { get; set; }
 
+        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

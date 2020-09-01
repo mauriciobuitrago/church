@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Church.Common.Entities;
 using Church.Web.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Church.Web.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class CampusController : Controller
     {
         private readonly DataContext _context;

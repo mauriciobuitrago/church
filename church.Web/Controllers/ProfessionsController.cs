@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Church.Common.Entities;
 using Church.Web.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Church.Web.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class ProfessionsController : Controller
     {
         private readonly DataContext _context;
@@ -124,24 +126,24 @@ namespace Church.Web.Controllers
                 return NotFound();
             }
 
-            var profession = await _context.Professions
+            Profession profession = await _context.Professions
+              
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (profession == null)
             {
                 return NotFound();
             }
 
-            return View(profession);
-        }
+            try
+            {
+                _context.Professions.Remove(profession);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(string.Empty, ex.Message);
+            }
 
-        // POST: Professions/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var profession = await _context.Professions.FindAsync(id);
-            _context.Professions.Remove(profession);
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
