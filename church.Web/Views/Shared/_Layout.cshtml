@@ -33,7 +33,7 @@
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
-                    @if (User.Identity.IsAuthenticated && User.IsInRole("User"))
+                    @if (User.Identity.IsAuthenticated)
                     {
                         <li><a asp-area="" asp-controller="Campus" asp-action="Index">Campus</a></li>
                         <li><a asp-area="" asp-controller="Professions" asp-action="Index">Profession</a></li>
