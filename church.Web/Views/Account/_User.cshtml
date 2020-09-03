@@ -1,0 +1,61 @@
+﻿@model Church.Web.Models.EditUserViewModel
+
+<div class="form-group">
+    <label asp-for="Document" class="control-label"></label>
+    <input asp-for="Document" class="form-control" />
+    <span asp-validation-for="Document" class="text-danger"></span>
+</div>
+
+<div class="form-group">
+    <label asp-for="FirstName" class="control-label"></label>
+    <input asp-for="FirstName" class="form-control" />
+    <span asp-validation-for="FirstName" class="text-danger"></span>
+</div>
+
+<div class="form-group">
+    <label asp-for="LastName" class="control-label"></label>
+    <input asp-for="LastName" class="form-control" />
+    <span asp-validation-for="LastName" class="text-danger"></span>
+</div>
+
+<div class="form-group">
+    <label asp-for="Address" class="control-label"></label>
+    <input asp-for="Address" class="form-control" />
+    <span asp-validation-for="Address" class="text-danger"></span>
+</div>
+
+<div class="form-group">
+    <label asp-for="NumberPhone" class="control-label"></label>
+    <input asp-for="NumberPhone" class="form-control" />
+    <span asp-validation-for="NumberPhone" class="text-danger"></span>
+</div>
+
+<div class="form-group">
+    <label asp-for="ImageFile" class="control-label"></label>
+    <input asp-for="ImageFile" class="form-control" type="file" />
+    <span asp-validation-for="ImageFile" class="text-danger"></span>
+</div>
+
+<div class="form-group">
+    <label asp-for="CampusesId" class="control-label"></label>
+    <select asp-for="CampusesId" asp-items="Model.Campuses" class="form-control"></select>
+    <span asp-validation-for="CampusesId" class="text-danger"></span>
+</div>
+
+<div class="form-group">
+    <label asp-for="DistrictsId" class="control-label"></label>
+    <select asp-for="DistrictsId" asp-items="Model.Districts" class="form-control"></select>
+    <span asp-validation-for="DistrictsId" class="text-danger"></span>
+</div>
+
+<div class="form-group">
+    <label asp-for="ChurchisId" class="control-label"></label>
+    <select asp-for="ChurchisId" asp-items="Model.Churchis" class="form-control"></select>
+    <span asp-validation-for="ChurchisId" class="text-danger"></span>
+</div>
+
+<div class="form-group">
+    <label asp-for="ProfessionsId" class="control-label"></label>
+    <select asp-for="ProfessionsId" asp-items="Model.Professions" class="form-control"></select>
+    <span asp-validation-for="ProfessionsId" class="text-danger"></span>
+</div>

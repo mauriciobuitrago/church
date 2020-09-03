@@ -1,4 +1,5 @@
-﻿using Church.Web.Data;
+﻿using Church.Common.Enums;
+using Church.Web.Data;
 using Church.Web.Data.Entities;
 using Church.Web.Models;
 using Microsoft.AspNetCore.Identity;
@@ -32,6 +33,8 @@ namespace Church.Web.Helpers
         {
             return await _userManager.CreateAsync(user, password);
         }
+
+   
 
         public async Task AddUserToRoleAsync(User user, string roleName)
         {
@@ -75,6 +78,35 @@ namespace Church.Web.Helpers
         {
             await _signInManager.SignOutAsync();
         }
+
+        public async Task<User> AddUserAsync(AddUserViewModel model, Guid imageId, UserType userType)
+        {
+            User user = new User
+            {
+                Address = model.Address,
+                Document = model.Document,
+                Email = model.Username,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                ImageId = imageId,
+                NumberPhone = model.NumberPhone,
+                Churchi= await _context.churches.FindAsync(model.ChurchisId),
+                Profession = await _context.Professions.FindAsync(model.ProfessionsId),
+                UserName = model.Username,
+                UserType = userType
+            };
+
+            IdentityResult result = await _userManager.CreateAsync(user, model.Password);
+            if (result != IdentityResult.Success)
+            {
+                return null;
+            }
+
+            User newUser = await GetUserAsync(model.Username);
+            await AddUserToRoleAsync(newUser, user.UserType.ToString());
+            return newUser;
+        }
+
 
     }
 

@@ -1,6 +1,8 @@
-﻿using Church.Web.Data.Entities;
+﻿using Church.Common.Enums;
+using Church.Web.Data.Entities;
 using Church.Web.Models;
 using Microsoft.AspNetCore.Identity;
+using System;
 using System.Threading.Tasks;
 
 namespace Church.Web.Helpers
@@ -20,6 +22,8 @@ namespace Church.Web.Helpers
         Task<SignInResult> LoginAsync(LoginViewModel model);
 
         Task LogoutAsync();
+
+        Task<User> AddUserAsync(AddUserViewModel model, Guid imageId, UserType userType);
 
     }
 
