@@ -108,6 +108,25 @@ namespace Church.Web.Helpers
         }
 
 
+        public async Task<IdentityResult> ChangePasswordAsync(User user, string oldPassword, string newPassword)
+        {
+            return await _userManager.ChangePasswordAsync(user, oldPassword, newPassword);
+        }
+
+        public async Task<IdentityResult> UpdateUserAsync(User user)
+        {
+            return await _userManager.UpdateAsync(user);
+        }
+
+        public async Task<User> GetUserAsync(Guid userId)
+        {
+            return await _context.Users
+                .Include(u => u.Churchi)
+                .FirstOrDefaultAsync(u => u.Id == userId.ToString());
+        }
+
+
+
     }
 
 }

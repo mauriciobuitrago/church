@@ -167,6 +167,122 @@ namespace Church.Web.Controllers
         }
 
 
+        ///////////////////////////////////////////////////
+        ///
+
+        public async Task<IActionResult> ChangeUser()
+        {
+            User user = await _userHelper.GetUserAsync(User.Identity.Name);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            District district= await _context.districts.FirstOrDefaultAsync(d => d.Churches.FirstOrDefault(c => c.Id == user.Churchi.Id) != null);
+            if (district == null)
+            {
+                district = await _context.districts.FirstOrDefaultAsync();
+            }
+
+            Campus campus = await _context.campuses.FirstOrDefaultAsync(c => c.Districts.FirstOrDefault(d => d.Id == district.Id) != null);
+            if (campus == null)
+            {
+                campus = await _context.campuses.FirstOrDefaultAsync();
+            }
+
+           
+
+            EditUserViewModel model = new EditUserViewModel
+            {
+                Address = user.Address,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                NumberPhone = user.NumberPhone,
+                ImageId = user.ImageId,
+                Churchis = _combosHelper.GetComboChurches(district.Id),
+                ChurchisId = user.Churchi.Id,
+                Campuses = _combosHelper.GetComboCampuses(),
+                CampusesId = campus.Id,
+                DistrictsId = district.Id,
+                Districts = _combosHelper.GetComboDistricts(campus.Id),
+                Id = user.Id,
+                Professions = _combosHelper.GetComboProfessions(),
+               
+                Document = user.Document
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ChangeUser(EditUserViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                Guid imageId = model.ImageId;
+
+                if (model.ImageFile != null)
+                {
+                    imageId = await _blobHelper.UploadBlobAsync(model.ImageFile, "users");
+                }
+
+                User user = await _userHelper.GetUserAsync(User.Identity.Name);
+
+                user.FirstName = model.FirstName;
+                user.LastName = model.LastName;
+                user.Address = model.Address;
+                user.NumberPhone = model.NumberPhone;
+                user.ImageId = imageId;
+                user.Churchi = await _context.churches.FindAsync(model.ChurchisId);
+                user.Document = model.Document;
+                user.Profession = await _context.Professions.FindAsync(model.ProfessionsId);
+
+                await _userHelper.UpdateUserAsync(user);
+                return RedirectToAction("Index", "Home");
+            }
+
+            model.Churchis = _combosHelper.GetComboChurches(model.DistrictsId);
+            model.Campuses = _combosHelper.GetComboCampuses();
+            model.Districts = _combosHelper.GetComboDistricts(model.ChurchisId);
+            model.Professions = _combosHelper.GetComboProfessions();
+            return View(model);
+        }
+
+        public IActionResult ChangePassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _userHelper.GetUserAsync(User.Identity.Name);
+                if (user != null)
+                {
+                    var result = await _userHelper.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
+                    if (result.Succeeded)
+                    {
+                        return RedirectToAction("ChangeUser");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, result.Errors.FirstOrDefault().Description);
+                    }
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "User no found.");
+                }
+            }
+
+            return View(model);
+        }
+
+
+
     }
 
 }

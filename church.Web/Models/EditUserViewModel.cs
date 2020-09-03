@@ -12,7 +12,7 @@ namespace Church.Web.Models
 {
     public class EditUserViewModel
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
 
         [Display(Name = "First Name")]
         [Required(ErrorMessage = "The field {0} is mandatory.")]
