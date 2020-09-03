@@ -476,5 +476,10 @@ namespace Church.Web.Controllers
             return RedirectToAction($"{nameof(DetailsDistrict)}/{district.Id}");
         }
 
+        public async Task<IActionResult> IndexUser()
+        {
+            return View(await _context.Users.ToListAsync());
+        }
+
     }
 }
