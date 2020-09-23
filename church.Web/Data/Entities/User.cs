@@ -44,7 +44,7 @@ namespace Church.Web.Data.Entities
 
         [Display(Name = "Image")]
         public string ImageFullPath => ImageId == Guid.Empty
-           ? $"https://localhost:44343//images/noimage.png"
+           ? $"https://churchma.azurewebsites.net/images/noimage.png"
             : $"https://churchi.blob.core.windows.net/users/{ImageId}";
 
         public Profession Profession { get; set; }
