@@ -4,14 +4,16 @@ using Church.Web.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Church.Web.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20201015164930_CreateNewTables")]
+    partial class CreateNewTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -43,7 +45,7 @@ namespace Church.Web.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("DistrictId1");
+                    b.Property<int?>("DistrictId");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -51,7 +53,7 @@ namespace Church.Web.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DistrictId1");
+                    b.HasIndex("DistrictId");
 
                     b.HasIndex("Name")
                         .IsUnique();
@@ -65,7 +67,7 @@ namespace Church.Web.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("CampusesId");
+                    b.Property<int?>("CampusId");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -73,7 +75,7 @@ namespace Church.Web.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CampusesId");
+                    b.HasIndex("CampusId");
 
                     b.HasIndex("Name")
                         .IsUnique();
@@ -335,16 +337,16 @@ namespace Church.Web.Migrations
 
             modelBuilder.Entity("Church.Common.Entities.Churchi", b =>
                 {
-                    b.HasOne("Church.Common.Entities.District", "District")
+                    b.HasOne("Church.Common.Entities.District")
                         .WithMany("Churches")
-                        .HasForeignKey("DistrictId1");
+                        .HasForeignKey("DistrictId");
                 });
 
             modelBuilder.Entity("Church.Common.Entities.District", b =>
                 {
-                    b.HasOne("Church.Common.Entities.Campus", "Campuses")
+                    b.HasOne("Church.Common.Entities.Campus")
                         .WithMany("Districts")
-                        .HasForeignKey("CampusesId");
+                        .HasForeignKey("CampusId");
                 });
 
             modelBuilder.Entity("Church.Web.Data.Entities.Assistance", b =>

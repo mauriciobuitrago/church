@@ -33,18 +33,35 @@
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+
+
                     @if (User.Identity.IsAuthenticated)
                     {
                         <li><a asp-area="" asp-controller="Campus" asp-action="Index">Campus</a></li>
-                        <li><a asp-area="" asp-controller="Professions" asp-action="Index">Profession</a></li>
-                       
+
+
 
                     }
                     @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                     {
 
                         <li><a asp-area="" asp-controller="Campus" asp-action="IndexUser">User</a></li>
-
+                        <li>
+                            <a asp-area="" asp-controller="Professions" asp-action="Index">
+                                <i class="glyphicon glyphicon-book"></i> Professions
+                            </a>
+                        </li>
+                        <li>
+                            <a asp-area="" asp-controller="UsersList" asp-action="Index">
+                                <i class="glyphicon glyphicon-list-alt"></i> Users
+                            </a>
+                        </li>
+                        <li>
+                            <a asp-area="" asp-controller="Account" asp-action="Index">
+                                <i class="glyphicon glyphicon-book"></i> Teachers
+                            </a>
+                        </li>
+                        
                     }
 
                 </ul>

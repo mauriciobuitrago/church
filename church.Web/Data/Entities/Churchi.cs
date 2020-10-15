@@ -23,7 +23,12 @@ namespace Church.Common.Entities
         [Display(Name = "# Users")]
         public int UsersNumber => Users == null ? 0 : Users.Count;
 
+        [JsonIgnore]
+        public District District { get; set; }
 
+        [JsonIgnore]
+        [NotMapped]
+        public int DistrictId { get; set; }
 
     }
 }

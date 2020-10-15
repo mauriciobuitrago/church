@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -22,9 +23,11 @@ namespace Church.Common.Entities
         [Display(Name = "# Users")]
         public int UsersNumber => Churches == null ? 0 : Churches.Sum(c => c.UsersNumber);
 
+
         [NotMapped]
         public int IdCampus { get; set; }
 
-
+        [JsonIgnore]
+        public Campus Campuses { get; set; }
     }
 }
