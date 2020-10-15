@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 
 namespace Church.Common.Entities
 {
@@ -17,6 +18,9 @@ namespace Church.Common.Entities
 
         [DisplayName("Churches Number")]
         public int ChurchesNumber => Churches == null ? 0 : Churches.Count;
+
+        [Display(Name = "# Users")]
+        public int UsersNumber => Churches == null ? 0 : Churches.Sum(c => c.UsersNumber);
 
         [NotMapped]
         public int IdCampus { get; set; }

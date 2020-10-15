@@ -17,7 +17,11 @@ namespace Church.Web.Data
         public DbSet<District> districts { get; set; }
         public DbSet<Profession> Professions { get; set; }
 
-        
+        public DbSet<Assistance> Assistances  { get; set; }
+        public DbSet<Meeting> Meetings { get; set; }
+
+
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

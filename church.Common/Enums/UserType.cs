@@ -7,6 +7,7 @@ namespace Church.Common.Enums
     public enum UserType
     {
         Admin,
-        User
+        Member,
+        Teacher
     }
 }

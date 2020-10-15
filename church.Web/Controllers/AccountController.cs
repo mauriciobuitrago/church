@@ -106,7 +106,7 @@ namespace Church.Web.Controllers
                     imageId = await _blobHelper.UploadBlobAsync(model.ImageFile, "users");
                 }
 
-                User user = await _userHelper.AddUserAsync(model, imageId, UserType.User);
+                User user = await _userHelper.AddUserAsync(model, imageId, UserType.Member);
                 if (user == null)
                 {
                     ModelState.AddModelError(string.Empty, "This email is already used.");
