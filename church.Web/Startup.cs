@@ -1,4 +1,5 @@
 ﻿
+using Church.Common.Services;
 using Church.Web.Data;
 using Church.Web.Data.Entities;
 using Church.Web.Helpers;
@@ -12,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Vereyon.Web;
 
 namespace church.Web
 {
@@ -78,7 +80,8 @@ namespace church.Web
             services.AddScoped<IConverterHelper, ConverterHelper>();
             services.AddScoped<ICombosHelper, CombosHelper>();
             services.AddScoped<IMailHelper, MailHelper>();
-
+            services.AddScoped<IApiService, ApiService>();
+            services.AddFlashMessage();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 

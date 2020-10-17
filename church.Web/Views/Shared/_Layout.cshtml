@@ -61,8 +61,21 @@
                                 <i class="glyphicon glyphicon-book"></i> Teachers
                             </a>
                         </li>
-                        
+
+
+
                     }
+
+                    @if (User.Identity.IsAuthenticated && User.IsInRole("Teacher"))
+                    {
+                        <li>
+                            <a asp-area="" asp-controller="Members" asp-action="Index">
+                                <i class="glyphicon glyphicon-tower"></i> View Members
+                            </a>
+                        </li>
+
+                    }
+
 
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
@@ -79,8 +92,6 @@
 
 
 
-
-                </ul>
             </div>
         </div>
     </nav>

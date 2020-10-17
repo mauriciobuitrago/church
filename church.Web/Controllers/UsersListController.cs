@@ -9,14 +9,19 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Vereyon.Web;
+
 namespace Church.Web.Controllers
 {
     public class UsersListController : Controller
     {
         private readonly DataContext _context;
-        public UsersListController(DataContext context)
+        private readonly IFlashMessage _flashMessage;
+
+        public UsersListController(DataContext context, IFlashMessage flashMessage)
         {
             _context = context;
+            _flashMessage = flashMessage;
         }
         public async Task<IActionResult> Index()
         {
@@ -62,6 +67,16 @@ namespace Church.Web.Controllers
             }
             _context.Users.Remove(user);
             await _context.SaveChangesAsync();
+            try
+            {
+                _context.Users.Remove(user);
+                await _context.SaveChangesAsync();
+                _flashMessage.Confirmation("The users was deleted.");
+            }
+            catch
+            {
+                _flashMessage.Danger("The users can't be deleted because it has related records.");
+            }
             return RedirectToAction(nameof(Index));
         }
     }

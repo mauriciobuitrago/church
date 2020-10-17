@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Church.Common.Entities;
 using Church.Web.Data;
 using Microsoft.AspNetCore.Authorization;
+using Vereyon.Web;
 
 namespace Church.Web.Controllers
 {
@@ -15,10 +16,12 @@ namespace Church.Web.Controllers
     public class ProfessionsController : Controller
     {
         private readonly DataContext _context;
+        private readonly IFlashMessage _flashMessage;
 
-        public ProfessionsController(DataContext context)
+        public ProfessionsController(DataContext context, IFlashMessage flashMessage)
         {
             _context = context;
+            _flashMessage = flashMessage;
         }
 
         // GET: Professions
@@ -138,10 +141,11 @@ namespace Church.Web.Controllers
             {
                 _context.Professions.Remove(profession);
                 await _context.SaveChangesAsync();
+                _flashMessage.Confirmation("The professions was deleted.");
             }
-            catch (Exception ex)
+            catch 
             {
-                ModelState.AddModelError(string.Empty, ex.Message);
+                _flashMessage.Danger("The professions can't be deleted because it has related records.");
             }
 
             return RedirectToAction(nameof(Index));

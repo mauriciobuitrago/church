@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Church.Common.Entities;
 using Church.Web.Data;
 using Microsoft.AspNetCore.Authorization;
+using Vereyon.Web;
 
 namespace Church.Web.Controllers
 {
@@ -15,10 +16,12 @@ namespace Church.Web.Controllers
     public class CampusController : Controller
     {
         private readonly DataContext _context;
+        private readonly IFlashMessage _flashMessage;
 
-        public CampusController(DataContext context)
+        public CampusController(DataContext context, IFlashMessage flashMessage)
         {
             _context = context;
+            _flashMessage = flashMessage;
         }
 
         // GET: Campus
@@ -166,16 +169,20 @@ namespace Church.Web.Controllers
                 return NotFound();
             }
 
+
+                _context.campuses.Remove(campus);
+                await _context.SaveChangesAsync();
+
             try
             {
                 _context.campuses.Remove(campus);
                 await _context.SaveChangesAsync();
+                _flashMessage.Confirmation("The camps was deleted.");
             }
-            catch (Exception ex)
+            catch
             {
-                ModelState.AddModelError(string.Empty, ex.Message);
+                _flashMessage.Danger("The camps can't be deleted because it has related records.");
             }
-
             return RedirectToAction(nameof(Index));
         }
 

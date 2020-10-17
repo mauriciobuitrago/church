@@ -1,0 +1,123 @@
+﻿@model IEnumerable<Church.Web.Data.Entities.User>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
+<flash dismissable="true" />
+
+<h2>Users</h2>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Users Information</h3>
+            </div>
+            @if (Model.Any())
+            {
+                <div class="panel-body">
+                    <table class="table table-hover table-responsive table-striped" id="MyTable">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Image
+                                </th>
+                                <th>
+                                    Name
+                                </th>
+                                <th>
+                                    Document
+                                </th>
+                                <th>
+                                    Email
+                                </th>
+                                <th>
+                                    Address
+                                </th>
+                                <th>
+                                    Profession
+                                </th>
+                                <th>
+                                    Phone
+                                </th>
+                                <th>
+                                    Camp
+                                </th>
+                                <th>
+                                    District
+                                </th>
+                                <th>
+                                    Church
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        <img src="@item.ImageFullPath" style="width:80px;height:80px;border-radius:50%" />
+                                    </td>
+                                    <td>
+                                        @item.FullName
+                                    </td>
+                                    <td>
+                                        @item.Document
+                                    </td>
+                                    <td>
+                                        @item.Email
+                                    </td>
+                                    <td>
+                                        @item.Address
+                                    </td>
+                                    <td>
+                                        @item.Profession.Name
+                                    </td>
+                                    <td>
+                                        @item.PhoneNumber
+                                    </td>
+                                    <td>
+                                        @item.Churchi.District.Campuses.Name
+                                    </td>
+                                    <td>
+                                        @item.Churchi.District.Name
+                                    </td>
+                                    <td>
+                                        @item.Churchi.Name
+                                    </td>
+                                    <td>
+                                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info"><i class="glyphicon glyphicon-align-justify"></i></a>
+                                        <button data-id="@item.Id" class="btn btn-danger deleteItem" data-toggle="modal" data-target="#deleteDialog"><i class="glyphicon glyphicon-trash"></i></button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <h2>There are no records</h2>
+            }
+        </div>
+    </div>
+</div>
+<partial name="_DeleteDialog" />
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="/js/deleteDialog.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#MyTable').DataTable();
+            sc_deleteDialog.openModal('deleteItem', true, 'btnYesDelete', '/UsersList/Delete/', false);
+        });
+    </script>
+}
