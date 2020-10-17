@@ -4,6 +4,8 @@ using Church.Common.Enums;
 using Church.Web.Data;
 using Church.Web.Data.Entities;
 using Church.Web.Helpers;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Onsale.Common.Requests;
@@ -27,9 +29,25 @@ namespace Church.Web.Controllers.API
             _userHelper = userHelper;
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetMembers()
+        {
+            List<User> members = await _context.Users
+                .Include(t => t.Churchi)
+                .ThenInclude(d => d.District)
+                .ThenInclude(c => c.Campuses)
+                .Include(t => t.Profession)
+                .Where(u => u.UserType == UserType.Member)
+                .ToListAsync();
+
+            return Ok(members);
+        }
+
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost]
-        [Route("GetMembersByTemple")]
-        public async Task<IActionResult> GetMembersByTemple([FromBody] EmailRequest request)
+        [Route("GetMembersByChurch")]
+        public async Task<IActionResult> GetMembersByChurch([FromBody] EmailRequest request)
         {
             if (!ModelState.IsValid)
             {

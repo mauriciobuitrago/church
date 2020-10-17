@@ -5,6 +5,7 @@ using Church.Web.Data.Entities;
 using Church.Web.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -50,6 +51,15 @@ namespace Church.Web.Controllers
                 .ToListAsync());
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetMembers()
+        {
+            List<User> members = await _context.Users
+                .Where(u => u.UserType == UserType.Member)
+                .ToListAsync();
+
+            return Ok(members);
+        }
 
 
 

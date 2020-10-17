@@ -31,7 +31,7 @@ namespace Church.Common.Responses
 
 
         public string ImageFullPath => ImageId == Guid.Empty
-          ? $"https://churchma.azurewebsites.net/images/noimage.png"
+          ? $"https://onchurchma.azurewebsites.net/images/noimage.png"
             : $"https://churchidemo.blob.core.windows.net/users/{ImageId}";
 
         public UserType UserType { get; set; }
