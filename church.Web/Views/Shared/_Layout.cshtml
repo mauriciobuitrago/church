@@ -26,18 +26,32 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">church.Web</a>
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Church</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+                    <li>
+                        <a asp-area="" asp-controller="Home" asp-action="Index">
+                             Home
+                        </a></li>
+
+                    <li><a asp-area="" asp-controller="Home" asp-action="About">
+                    <i class="glyphicon glyphicon-book"> About</i> 
+                    </a></li>
+                    <li>
+                        <a asp-area="" asp-controller="Home" asp-action="Contact">
+                         
+                            <i class="glyphicon glyphicon-book"></i> Contact
+                        </a></li>
 
 
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <li><a asp-area="" asp-controller="Campus" asp-action="Index">Campus</a></li>
+                        <li>
+                            <a asp-area="" asp-controller="Campus" asp-action="Index">
+                                
+                                <i class="glyphicon glyphicon-book"></i> Campus
+                            </a></li>
 
 
 
@@ -45,7 +59,13 @@
                     @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                     {
 
-                        <li><a asp-area="" asp-controller="Campus" asp-action="IndexUser">User</a></li>
+                        <li>
+                            <a asp-area="" asp-controller="Campus" asp-action="IndexUser">
+                                <i class="glyphicon glyphicon-list-alt"> AllUser</i>
+                            </a>
+                               
+                        </li>
+
                         <li>
                             <a asp-area="" asp-controller="Professions" asp-action="Index">
                                 <i class="glyphicon glyphicon-book"></i> Professions
@@ -70,7 +90,7 @@
                     {
                         <li>
                             <a asp-area="" asp-controller="Members" asp-action="Index">
-                                <i class="glyphicon glyphicon-tower"></i> View Members
+                                <i class="glyphicon glyphicon-apple"></i> View Members
                             </a>
                         </li>
 

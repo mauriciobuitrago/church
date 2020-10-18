@@ -1,0 +1,119 @@
+﻿@model Church.Web.Data.Entities.User
+
+@{
+    ViewData["Title"] = "Details";
+}
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
+<h2>Details</h2>
+<div>
+    <h4>User:  @Html.DisplayFor(model => model.FullName) </h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastName)
+        </dt>
+
+        <dd>
+
+
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Document)
+
+
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Document)
+        </dd>
+        <dt>
+
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+        <dt>
+
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+        <dd>
+
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+        <dt>
+
+            @Html.DisplayNameFor(model => model.PhoneNumber)
+        </dt>
+        <dd>
+
+            @Html.DisplayFor(model => model.PhoneNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Profession)
+        </dt>
+        <dd>
+
+            @Html.DisplayFor(model => model.Profession.Name)
+        </dd>
+        <dt>
+            Campus
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Churchi.District.Campuses.Name)
+        </dd>
+        <dt>
+            District
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Churchi.District.Name)
+        </dd>
+        <dt>
+            Church
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Churchi.Name)
+        </dd>
+        <dt>
+            Photografy
+        </dt>
+        <dd>
+            <br />
+            <img src=" @Html.DisplayFor(model => model.ImageFullPath)" style="width:100px;height:100px;max-width: 100%; height: auto;margin-right: 50%" />
+
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Index" class="btn btn-success">  <i class="glyphicon glyphicon-arrow-left"></i>Back to List User</a>
+    <button data-id="@Html.DisplayFor(model => model.Id)" class="btn btn-danger deleteItem" data-toggle="modal" data-target="#deleteDialog"><i class="glyphicon glyphicon-trash"></i></button>
+</div>
+<br />
+
+<partial name="_DeleteDialog" />
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="/js/deleteDialog.js"></script>
+
+    <script type="text/javascript">
+            $(document).ready(function () {
+                $('#MyTable').DataTable();
+
+                sc_deleteDialog.openModal('deleteItem', true, 'btnYesDelete', '/UsersList/Delete/', false);
+            });
+    </script>
+}

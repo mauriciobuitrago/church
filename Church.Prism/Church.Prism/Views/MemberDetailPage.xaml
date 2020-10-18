@@ -4,80 +4,90 @@
              xmlns:prism="http://prismlibrary.com"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="Church.Prism.Views.MemberDetailPage"
-              xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
              xmlns:busyindicator="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms"
-              ios:Page.UseSafeArea="true"
+             xmlns:syncfusion="clr-namespace:Syncfusion.SfRotator.XForms;assembly=Syncfusion.SfRotator.XForms"
+     
+             ios:Page.UseSafeArea="true"
    
              Title="{Binding Title}">
 
 
 
-    <AbsoluteLayout>
-        <StackLayout AbsoluteLayout.LayoutBounds="0,0,1,1"
-                     AbsoluteLayout.LayoutFlags="All" 
-                     Padding="5">
-            
-            <SearchBar Placeholder="Search a member..."
-                SearchCommand="{Binding SearchCommand}"
-                Text="{Binding Search}"/>
-                <CollectionView ItemsSource="{Binding Members}">
-                    <CollectionView.ItemsLayout>
-                        <GridItemsLayout Orientation="Vertical"/>
-                    </CollectionView.ItemsLayout>
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate>
-                            <Grid>
-                                <Grid.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding SelectMemberCommand}"/>
-                                </Grid.GestureRecognizers>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
-                                <ffimageloading:CachedImage Grid.Column="0"
-                                                    Aspect="AspectFill"
-                                                    Source="{Binding ImageFullPath}" 
-                                                    CacheDuration= "50"
-                                                    Margin="5"
-                                                    RetryCount= "3"
-                                                    RetryDelay= "600"
-                                                    WidthRequest="100"/>
-                                <StackLayout Grid.Column="1"
-                                     VerticalOptions="Center">
-                                    <Label Text="{Binding FullName}" 
-                                   FontAttributes="Bold"
-                                   FontSize="Medium"
-                                   LineBreakMode="TailTruncation" />
-                                    <Label Text="{Binding Email}" 
-                                   FontAttributes="Bold"
-                                   FontSize="Medium"
-                                   LineBreakMode="TailTruncation" />
-                                    <Label Text="{Binding PhoneNumber}"
-                                   LineBreakMode="TailTruncation"
-                                   FontAttributes="Italic" 
-                                   VerticalOptions="End" />
-                                </StackLayout>
-                                <Image Grid.Column="2" 
-                               Source="ic_more_vert"/>
-                            </Grid>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
-        </StackLayout>
-        <busyindicator:SfBusyIndicator AnimationType="Gear" 
-                                       AbsoluteLayout.LayoutBounds=".5,.5,.5,.5"
-                	                   AbsoluteLayout.LayoutFlags="All"
-                	                   BackgroundColor="Silver"
-                	                   HorizontalOptions="Center"
-                	                   TextColor="White"
-                	                   IsBusy="{Binding IsRunning}"
-                	                   Title="Loading..."
-                	                   VerticalOptions="Center"
-                	                   ViewBoxWidth="80"
-                	                   ViewBoxHeight="80" />
-    </AbsoluteLayout>
+    <StackLayout Padding="5">
+        <ScrollView>
+            <StackLayout>
+                <Image Source="{Binding Member.ImageFullPath}"
+                   Aspect="AspectFit"
+                   HeightRequest="300"
+                   HorizontalOptions="Center" />
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0"
+                           Grid.Column="0"
+                           FontAttributes="Bold"
+                           Text="FullName"/>
+                    <Label Grid.Row="0"
+                           Grid.Column="1"
+                           Text="{Binding Member.FullName}"/>
+                    <Label Grid.Row="1"
+                           Grid.Column="0"
+                           FontAttributes="Bold"
+                           Text="First Name"/>
+                    <Label Grid.Row="1"
+                           Grid.Column="1"
+                           Text="{Binding Member.FirstName}"/>
+                    <Label Grid.Row="2"
+                           Grid.Column="0"
+                           FontAttributes="Bold"
+                           Text="Last Name"/>
+                    <Label Grid.Row="2"
+                           Grid.Column="1"
+                           Text="{Binding Member.LastName}"/>
+                    <Label Grid.Row="3"
+                           Grid.Column="0"
+                           FontAttributes="Bold"
+                           Text="Document"/>
+                    <Label Grid.Row="3"
+                           Grid.Column="1"
+                           Text="{Binding Member.Document}"/>
+                    <Label Grid.Row="4"
+                           Grid.Column="0"
+                           FontAttributes="Bold"
+                           Text="Phone Number"/>
+                    <Label Grid.Row="4"
+                           Grid.Column="1"
+                           Text="{Binding Member.PhoneNumber}"/>
+                    <Label Grid.Row="5"
+                           Grid.Column="0"
+                           FontAttributes="Bold"
+                           Text="Address"/>
+                    <Label Grid.Row="5"
+                           Grid.Column="1"
+                           Text="{Binding Member.Address}"/>
+                    <Label Grid.Row="6"
+                           Grid.Column="0"
+                           FontAttributes="Bold"
+                           Text="Email"/>
+                    <Label Grid.Row="6"
+                           Grid.Column="1"
+                           Text="{Binding Member.Email}"/>
+
+                </Grid>
+            </StackLayout>
+        </ScrollView>
+    </StackLayout>
 
 </ContentPage>
 

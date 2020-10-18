@@ -28,7 +28,7 @@ namespace Church.Common.Requests
 
         public string PasswordConfirm { get; set; }
 
-        public int TempleId { get; set; }
+        public int ChurcheId { get; set; }
 
         public int ProfessionId { get; set; }
 
